@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "one-php-mvc Blog",
+    "author": "Shadowed Mists",
+    "description": "This is the best blog ever. You must read it.",
+    "keywords": "keywords, meta, abstract, one word descriptions are best",
+    "image": "http://shadowedmists.com/images/handprint64black.jpg",
+    "lang": "en"
+  },
+  "db": {
+    "host": "localhost", 
+    "database": "blog",
+    "username": "root",
+    "password": "kaze5293"
+  },
+  "default_language" : "en",
+  "languages": ["en"],
+  "includes": ["includes/orm.php", "includes/Parsedown.php"],
+  "master_layout" : "views/_layout.php",
+  "debug": false
+}

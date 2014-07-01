@@ -1,0 +1,32 @@
+body {
+    font-family:  "Roboto", Helvetica, Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+.wrap {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+.wrap .inner {
+    width: 90%;
+    margin: 0px auto;
+    padding: 0px;
+    max-width: 500px;
+}
+.wrap .inner input[type=text], 
+.wrap .inner input[type=email],
+.wrap .inner input[type=url],
+.wrap .inner input[type=password],
+.wrap .inner input[type=submit],
+.wrap .inner textarea {
+    width: 100%;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    display: block;
+}
+.wrap .inner label {
+    display: block;
+    margin-bottom: 3px;
+}
