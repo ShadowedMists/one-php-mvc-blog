@@ -34,6 +34,11 @@ class AdminController extends Controller {
                 return $this->view($model);
             }
 
+            if(strlen($model['password']) < 6) {
+                $model['error'] = 'Please enter a password that is at least 6 characters.';
+                return $this->view($model);
+            }
+
             if(strcmp($model['password'], $model['confirm']) !== 0) {
                 $model['error'] = 'The passwords do not match.';
                 return $this->view($model);
@@ -100,8 +105,8 @@ class AdminController extends Controller {
 
         $model = array(
             'blog_name' => $this->post('blog_name'),
-            'email' => $this->post('email'),
             'display_name' => $this->post('display_name'),
+            'email' => $this->post('email'),
             'error' => NULL
         );
 
@@ -110,21 +115,26 @@ class AdminController extends Controller {
             if(empty($model['blog_name'])) {
                 $req[] = 'Blog Name';
             }
-            if(empty($model['email'])) {
-                $req[] = 'Email';
-            }
             if(empty($model['display_name'])) {
                 $req[] = 'Your Name';
+            }
+            if(empty($model['email'])) {
+                $req[] = 'Email';
             }
             if(!empty($req)) {
                 $model['error'] = 'The following fields are required: ' . implode(', ', $req);
                 return $this->view($model);
             }
+
+            if(!filter_var($model['email'], FILTER_VALIDATE_EMAIL)) {
+                $model['error'] = 'Please enter a valid email address.';
+                return $this->view($model);
+            }
             
             $settings = $this->get_settings();
             $settings->blog_name = $model['blog_name'];
-            $settings->email = $model['email'];
             $settings->display_name = $model['display_name'];
+            $settings->email = $model['email'];
             
             if(!$settings->update()) {
                 $model['error'] = 'Failed to update settings: ' . last_error();
@@ -135,8 +145,8 @@ class AdminController extends Controller {
         else {
             $settings = $this->get_settings();
             $model['blog_name'] = $settings->blog_name;
-            $model['email'] = $settings->email;
             $model['display_name'] = $settings->display_name;
+            $model['email'] = $settings->email;
         }
         $this->view($model);
     }
