@@ -30,6 +30,8 @@ class EntryController extends Controller {
             $this->redirect(NULL, 'home');
         }
 
+        $this->meta->title = 'Blog Entry';
+
         $model = array(
             'id' => $this->post('id'),
             'title' => $this->post('title'),
