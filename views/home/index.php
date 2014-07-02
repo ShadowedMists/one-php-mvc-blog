@@ -8,8 +8,8 @@
 <?php } ?>
 <div>
     <?php if (count($model) == 25) { ?>
-        <a href="<?php echo $this->route_url(NULL, NULL), '/', $this->page + 1; ?>">Older Posts</a>
+        <a href="<?php echo $this->route_url(NULL, 'home', $this->page + 1); ?>">Older Posts</a>
     <?php } if($this->page > 0) { ?>
-        <a href="<?php echo $this->route_url(NULL, NULL), '/', $this->page - 1; ?>">Newer Posts</a>
+        <a href="<?php echo $this->route_url(NULL, 'home', $this->page - 1); ?>">Newer Posts</a>
     <?php }?>
 </div>
