@@ -22,7 +22,7 @@
     <body>
         <header>
             <nav>
-                <a href="<?php echo $this->route_url(NULL, 'home'); ?>"><?php echo $settings->blog_name; ?></a>
+                <a href="<?php echo $this->route_url(NULL, 'home'); ?>"><?php echo @$settings->blog_name; ?></a>
             </nav>
         </header>
         
@@ -31,7 +31,7 @@
         </div>
         
         <footer>
-            powered by <a href="https://github.com/ShadowedMists/one-php-mvc-blog" target="_blank">one-php-mvc-blog</a> | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">login</a>
+            powered by <a href="https://github.com/ShadowedMists/one-php-mvc-blog" target="_blank">one-php-mvc-blog</a> | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">admin</a>
         </footer>
     </body>
 </html>
