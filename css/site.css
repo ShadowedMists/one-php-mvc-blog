@@ -39,7 +39,7 @@ form label {
     margin-bottom: 3px;
 }
 footer {
-    padding-top: 15px;
+    padding: 15px 0px;
     font-size: .8em;
 }
 .entry > h2 {

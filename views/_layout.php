@@ -1,6 +1,4 @@
-<?php 
-    $settings = $this->get_settings();
-?>
+<?php $settings = $this->get_settings(); ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->request->lang; ?>">
     <head>
@@ -33,7 +31,7 @@
         </div>
         
         <footer>
-            powered by one-php-mvc-blog | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">Login</a>
+            powered by <a href="https://github.com/ShadowedMists/one-php-mvc-blog" target="_blank">one-php-mvc-blog</a> | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">login</a>
         </footer>
     </body>
 </html>
