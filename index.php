@@ -357,6 +357,41 @@ class Controller {
     }
 
     /**
+     * Sets the HTTP Response header to HTTP 401 Unauthorized and immediately exits the application.
+     */
+    public function unauthorized() {
+        header('HTTP/1.0 401 Unauthorized');
+        exit;
+    }
+
+    /**
+     * Sets the HTTP Response header to HTTP 400 Bad Request and immediately exits the application.
+     */
+    public function bad_request() {
+        header('HTTP/1.0 400 Bad Request');
+        exit;
+    }
+
+    /**
+     * Sets the HTTP Response header to HTTP 500 Internal Server Error and immediately exits the application.
+     */
+    public function internal_server_error($message = NULL) {
+        header('HTTP/1.0 500 Internal Server Error');
+        if(!empty($message)) {
+            echo $message;
+        }
+        exit;
+    }
+
+    /**
+     * Sets the HTTP Response header to HTTP 410 Gone and immediately exits the application.
+     */
+    public function gone() {
+        header('HTTP/1.0 410 Gone');
+        exit;
+    }
+
+    /**
      * Generates a URL for the specified parameters.
      *
      * @param string    the action to use for create the request

@@ -1,5 +1,5 @@
 <?php 
-    $session = $this->get_session();
+    $settings = $this->get_settings();
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->request->lang; ?>">
@@ -24,23 +24,16 @@
     <body>
         <header>
             <nav>
-                <ul class="menu">
-                    <li<?php if($this->request->controller == 'home') { echo ' class="active"'; } ?>><a href="<?php echo $this->route_url(NULL, 'home'); ?>">one-php-mvc Blog</a></li>
-                </ul>
-                <span class="authentication">
-                    <?php if($session !== NULL) { ?>
-                        <a href="<?php echo $this->route_url('index', 'settings'); ?>">Settings</a>
-                    <?php } else { ?>
-                        <a href="<?php echo $this->route_url(NULL, 'settings'); ?>">Login</a>
-                    <?php } ?>
-                </span>
+                <a href="<?php echo $this->route_url(NULL, 'home'); ?>"><?php echo $settings->blog_name; ?></a>
             </nav>
         </header>
-
-        <?php $this->render_body(); ?>
-
+        
+        <div class="content">
+            <?php $this->render_body(); ?>
+        </div>
+        
         <footer>
-            &copy; 2013-<?php echo date('Y'); ?> Shadowed Mists
+            powered by one-php-mvc-blog | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">Login</a>
         </footer>
     </body>
 </html>

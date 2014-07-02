@@ -1,23 +1,26 @@
 <?php
 
-class SettingsController extends Controller {
+class AdminController extends Controller {
 
     public function index() {
-        $settings = $this->get_settings();
-        
-        if($this->get_session() === NULL) {
+        if($this->get_session() == NULL) {
             $this->redirect('login');
         }
+
+        $settings = $this->get_settings();
         
-        $this->meta->title = 'Settings';
-        $model = array('error' => NULL);
-        $this->view($model);
+        $this->meta->title = 'Blog Administration';
+        $this->view();
     }
 
     public function password() {
         if($this->get_session() == NULL) {
             $this->redirect('login');
         }
+        
+        $settings = $this->get_settings();
+
+        $this->meta->title = 'Update Password';
 
         $model = array(
             'password' => $this->post('password'),
@@ -35,32 +38,13 @@ class SettingsController extends Controller {
                 $model['error'] = 'The passwords do not match.';
                 return $this->view($model);
             }
-            $settings = $this->get_settings();
-            if($settings === NULL) {
-                $model['error'] = 'Failed to load settings: ' . last_error();
+            
+            $settings->password_hash = hash('sha512', $model['password'] . $settings->password_salt);
+            
+            if(!$settings->update()) {
+                $model['error'] = 'Failed to update password: ' . last_error();
                 return $this->view($model);
             }
-
-            $hash = hash('sha512', $model['password'] . $settings->password_salt);
-            if(strcmp(strtolower($model['email']), $settings->email) !== 0 ||
-                strcmp($hash, $settings->password_hash) !== 0) {
-                $model['error'] = 'That email/password combination was not valid.';
-                return $this->view($model);
-            }
-
-            $session = new session();
-            $session->code = uniqid();
-            if(!$session->insert()) {
-                $model['error'] = 'Failed to create new session: ' . last_error();
-                return $this->view($model);
-            }
-
-            $session = session::select_by_id($session->id);
-            if($session === NULL) {
-                $model['error'] = 'Failed to load new session: ' . last_error();
-                return $this->view($model);
-            }
-            $this->set_session($session);
             $this->redirect(NULL);
         }
 
@@ -68,6 +52,10 @@ class SettingsController extends Controller {
     }
 
     public function login() {
+        $settings = $this->get_settings();
+        
+        $this->meta->title = 'one-php-mvc-blog Login';
+        
         $model = array(
             'email' => $this->post('email'), 
             'password' => $this->post('password'),
@@ -76,12 +64,6 @@ class SettingsController extends Controller {
         if(array_key_exists('submit', $_POST)) {
             if(empty($model['email']) || empty($model['password'])) {
                 $model['error'] = 'Please enter a email and password';
-                return $this->view($model);
-            }
-
-            $settings = $this->get_settings();
-            if($settings === NULL) {
-                $model['error'] = 'Failed to load settings: ' . last_error();
                 return $this->view($model);
             }
 
@@ -108,7 +90,55 @@ class SettingsController extends Controller {
             $this->redirect(NULL);
         }
         
-        return $this->view($model);
+        $this->view($model);
+    }
+
+    public function settings() {
+        if($this->get_session() == NULL) {
+            $this->redirect('login');
+        }
+
+        $model = array(
+            'blog_name' => $this->post('blog_name'),
+            'email' => $this->post('email'),
+            'display_name' => $this->post('display_name'),
+            'error' => NULL
+        );
+
+        if(array_key_exists('submit', $_POST)) {
+            $req = array();
+            if(empty($model['blog_name'])) {
+                $req[] = 'Blog Name';
+            }
+            if(empty($model['email'])) {
+                $req[] = 'Email';
+            }
+            if(empty($model['display_name'])) {
+                $req[] = 'Your Name';
+            }
+            if(!empty($req)) {
+                $model['error'] = 'The following fields are required: ' . implode(', ', $req);
+                return $this->view($model);
+            }
+            
+            $settings = $this->get_settings();
+            $settings->blog_name = $model['blog_name'];
+            $settings->email = $model['email'];
+            $settings->display_name = $model['display_name'];
+            
+            if(!$settings->update()) {
+                $model['error'] = 'Failed to update settings: ' . last_error();
+                return $this->view($model);
+            }
+            return $this->redirect(NULL);
+        }
+        else {
+            $settings = $this->get_settings();
+            $model['blog_name'] = $settings->blog_name;
+            $model['email'] = $settings->email;
+            $model['display_name'] = $settings->display_name;
+        }
+        $this->view($model);
     }
 }
 

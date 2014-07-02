@@ -4,6 +4,9 @@ class HomeController extends Controller {
     protected $page;
 
     public function index($page = 0) {
+        $settings = $this->get_settings();
+        $this->meta->title = $settings->blog_name;
+
         if($page < 0) {
             $page = 0;
         }

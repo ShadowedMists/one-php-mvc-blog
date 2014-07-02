@@ -4,10 +4,20 @@ class EntryController extends Controller {
 
     public function index($id = NULL) {
         if(empty($id)) {
+            $this->redirect(NULL, "home");
+        }
+        
+        $settings = $this->get_settings();
+
+        $entry = entry::select_by_id($id);
+        if($entry === NULL) {
             $this->not_found();
         }
-        $entry = entry::select_by_id($id);
-        $this->meta->title = $entry->title;
+        if($entry->published === 0) {
+            $this->gone();
+        }
+        
+        $this->meta->title = $entry->title . ' - ' . $settings->blog_name;
         $this->view($entry);
     }
 
@@ -66,6 +76,24 @@ class EntryController extends Controller {
             
             $res = empty($entry->id) ? $entry->insert() : $entry->update();
             $model['error'] = $res ? 'Saved successfully.' : 'Failed to save entry: ' . last_error(); 
+        }
+        else {
+            if(!empty($id)) {
+                $entry = entry::select_by_id($id);
+                if($entry === NULL) {
+                    $this->not_found();
+                }
+                if($entry === FALSE) {
+                    $model['error'] = 'Unable to load entry: ' . last_error();
+                }
+                else {
+                    $model['id'] = $entry->id;
+                    $model['title'] = $entry->title;
+                    $model['inage_url'] = $entry->image_url;
+                    $model['published'] = $entry->published;
+                    $model['body'] = $entry->body;
+                }
+            } 
         }
 
         $this->view($model);
