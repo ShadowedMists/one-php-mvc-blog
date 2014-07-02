@@ -82,6 +82,7 @@ class EntryController extends Controller {
             
             $res = empty($entry->id) ? $entry->insert() : $entry->update();
             $model['error'] = $res ? 'Saved successfully.' : 'Failed to save entry: ' . last_error(); 
+            $model['id'] = $entry->id;
         }
         else {
             if(!empty($id)) {
