@@ -567,11 +567,17 @@ class Controller {
         return $session;
     }
 
-    public function get_settings() {
+    public function get_settings($redirect = TRUE) {
         if($this->current_settings !== NULL) {
             return $this->current_settings;
         }
         $this->current_settings = setting::select_first();
+        if($this->current_settings === FALSE) {
+            $this->current_settings = NULL;
+        }
+        if($this->current_settings === NULL && $redirect) {
+            $this->redirect(NULL, 'setup');
+        }
         return $this->current_settings;
     }
 
