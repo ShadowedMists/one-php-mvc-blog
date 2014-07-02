@@ -5,6 +5,11 @@
 
 <h1><?php echo $model->title; ?></h1>
 <p><?php echo $settings->display_name, ' ', $this->get_age_string($model->created);?></p>
-<div>
-    <?php echo $parsedown->text($model->body); ?>
+<div class="markdown">
+    <?php 
+        if(!empty($model->image_url)) {
+            echo '<img src="', $model->image_url, '" alt="Title Image" />';
+        }
+        echo $parsedown->text($model->body); 
+    ?>
 </div>
