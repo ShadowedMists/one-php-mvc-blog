@@ -18,6 +18,10 @@ class EntryController extends Controller {
         }
         
         $this->meta->title = $entry->title . ' - ' . $settings->blog_name;
+        $this->meta->description = $entry->snippet;
+        if(!empty($entry->image_url)) {
+            $this->meta->image = $entry->image_url;
+        }
         $this->view($entry);
     }
 
@@ -91,6 +95,7 @@ class EntryController extends Controller {
                     $model['title'] = $entry->title;
                     $model['inage_url'] = $entry->image_url;
                     $model['published'] = $entry->published;
+                    $model['snippet'] = $entry->snippet;
                     $model['body'] = $entry->body;
                 }
             } 
@@ -107,9 +112,46 @@ class EntryController extends Controller {
         if(empty($id)) {
             $this->not_found();
         }
+        
         $entry = entry::select_by_id($id);
+        if($entry === NULL) {
+            $this->not_found();
+        }
+
         $this->meta->title = $entry->title . ' - Preview';
-        $this->view($entry);
+        $this->view($entry, 'index');
+    }
+
+    public function delete($id) {
+        if($this->get_session() === NULL) {
+            $this->redirect(NULL, 'home');
+        }
+
+        if(empty($id)) {
+            $this->not_found();
+        }
+        
+        $entry = entry::select_by_id($id);
+        if($entry === NULL) {
+            $this->not_found();
+        }
+        
+        $model = array(
+            'entry' => $entry, 
+            'error' => NULL
+        );
+
+        if(array_key_exists('submit', $_POST)) {
+            if(!$entry->delete()) {
+                $model['error'] = 'Failed to delete entry: ' . last_error();
+            }
+            else {
+                $this->redirect('blog', 'admin');
+            }
+        }
+
+        $this->meta->title = 'Delete Blog Entry';
+        $this->view($model);
     }
 }
 

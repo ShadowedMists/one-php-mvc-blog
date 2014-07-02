@@ -2,6 +2,7 @@
 <h1>Blog Entry</h1>
 <p class="error"><?php echo $model['error']; ?></p>
 <form method="post">
+    <input type="hidden" name="id" value="<?php echo $model['id']; ?>" />
     <label for="title">Title</label>
     <input type="text" name="title" required maxlength="127" value="<?php echo $model['title']; ?>" />
     <label for="image_url">Entry Image URL</label>

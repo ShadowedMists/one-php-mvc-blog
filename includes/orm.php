@@ -74,6 +74,21 @@ class entry {
         }
         return $array;
     }
+    
+    public static function select_list() {
+        $sql = 'select id, title, image_url, published, null as snippet, null as body, created, updated from entry order by id desc';
+        $res = mysqli_query(Application::$DB_CONNECTION, $sql);
+        if($res === FALSE || mysqli_num_rows($res) === 0) { 
+            return array();
+        }
+        $array = array();
+        while($row = mysqli_fetch_array($res)) {
+            $entry = new entry();
+            $entry->load($row);
+            $array[] = $entry;
+        }
+        return $array;
+    }
 }
 
 class session {

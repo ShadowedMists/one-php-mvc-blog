@@ -140,6 +140,17 @@ class AdminController extends Controller {
         }
         $this->view($model);
     }
+
+    public function blog() {
+        if($this->get_session() == NULL) {
+            $this->redirect('login');
+        }
+        $settings = $this->get_settings();
+        $this->meta->title = 'Blog Management';
+
+        $entries = entry::select_list();
+        $this->view($entries);
+    }
 }
 
 ?>

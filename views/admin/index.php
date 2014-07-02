@@ -7,4 +7,5 @@
 <h2>Blog Management</h2>
 <ul>
     <li><a href="<?php echo $this->route_url('edit', 'entry'); ?>">New Blog Post</a></li>
+    <li><a href="<?php echo $this->route_url('blog'); ?>">All Blog Entries List</a></li>
 </ul>
