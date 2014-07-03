@@ -4,7 +4,7 @@
 ?>
 
 <h1><?php echo $model->title; ?></h1>
-<p><?php echo $settings->display_name, ' ', $this->get_age_string($model->created);?></p>
+<p><?php echo $this->get_age_string($model->created), ' by ', $settings->display_name;?></p>
 <div class="markdown">
     <?php 
         if(!empty($model->image_url)) {

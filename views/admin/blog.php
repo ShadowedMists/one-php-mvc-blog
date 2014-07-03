@@ -1,3 +1,4 @@
+<h1>All Blog Entries</h1>
 <table>
     <thead>
         <tr>

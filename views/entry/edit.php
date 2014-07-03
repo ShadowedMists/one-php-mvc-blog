@@ -13,5 +13,13 @@
     <textarea name="snippet" required maxlength="1023" rows="5"><?php echo $model['snippet']; ?></textarea>
     <label for="body">Entry</label>
     <textarea name="body" rows="15"><?php echo $model['body']; ?></textarea>
+    <?php if(!empty($model['id'])) { ?>
+    <input type="button" value="Preview" onclick="preview()" />
+    <?php } ?>
     <input type="submit" name="submit" value="Save Entry" />
 </form>
+<script type="text/javascript">
+    function preview() {
+        window.open('<?php echo $this->route_url('preview', 'entry', $model['id']); ?>', '_blank');
+    }
+</script>
