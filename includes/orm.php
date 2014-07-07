@@ -88,6 +88,22 @@ class entry {
         }
         return $array;
     }
+
+    public static function select_by_tag($tag, $offset = 0) { 
+        $sql = 'select id, title, image_url, published, snippet, null as body, created, updated from entry e inner join (select entry from entry_tag et inner join tag t on et.tag = t.id where name = "%s" group by entry) t on e.id = t.entry where published = 1 order by id desc limit %d, 25';
+        $sql = sprintf($sql, escape($tag), $offset);
+        $res = mysqli_query(Application::$DB_CONNECTION, $sql);
+        if($res === FALSE || mysqli_num_rows($res) === 0) { 
+            return array();
+        }
+        $array = array();
+        while($row = mysqli_fetch_array($res)) {
+            $entry = new entry();
+            $entry->load($row);
+            $array[] = $entry;
+        }
+        return $array;
+    }
 }
 
 class session {

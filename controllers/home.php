@@ -7,6 +7,7 @@ class HomeController extends Controller {
         $settings = $this->get_settings();
         $this->meta->title = $settings->blog_name;
 
+        $page = intval($page);
         if($page < 0) {
             $page = 0;
         }

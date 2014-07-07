@@ -18,6 +18,6 @@
 <div>
     <span style="font-weight:bold">Tags:</span>
     <?php foreach ($tags as $tag) { ?>
-    <a href="<?php echo $this->route_url(NULL, 'tag', $tag); ?>"><?php echo $tag?></a>
+    <a href="<?php echo $this->route_url(NULL, 'tag', $tag); ?>"><?php echo $tag; ?></a>
     <?php } ?>
 </div>

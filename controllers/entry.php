@@ -148,8 +148,19 @@ class EntryController extends Controller {
             $this->not_found();
         }
 
+        $model = array('entry' => $entry, 'tags' => NULL);
+
+        $tags = entry_tag::select_by_entry($entry->id);
+        if($tags !== FALSE) {
+            $t = array();
+            foreach($tags as $name) {
+                $t[] = $name->name;
+            }
+            $model['tags'] = $t;
+        }
+
         $this->meta->title = $entry->title . ' - Preview';
-        $this->view($entry, 'index');
+        $this->view($model, 'index');
     }
 
     public function delete($id) {
