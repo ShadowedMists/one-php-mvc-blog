@@ -7,7 +7,7 @@ A single user blog built on one-php-mvc framework and designed to run on the Ras
 Built on the one-php-mvc (OPM) framework, one-php-mvc-blog (OPMB) strives to maintain the low footprint, resource-mindful approach that the framework embodies. Designed for the Rasberry Pi, OPMB is a mobile-responsive, dynamic, database-driven blog platform unlike other blogging platforms that force you to generate static html files or perform additional steps to render content.  
 
 ## Features
-While simplicity is the goal, OPMB has some of the normal blogging features you would expect of a modern platform. Posts are entered as Markdown and rendered on the visible page as HTML. Optionally tag you entries with keywords to help users identify entries interesting to them. To write blog posts, you must login to the administration area and create your posts from there. You may update the name of the blog or your display name at any time from the Blog Settings.
+While simplicity is the goal, OPMB has some of the normal blogging features you would expect of a modern platform. Posts are entered as Markdown and rendered on the visible page as HTML. Optionally tag your entries with keywords to help users identify entries interesting to them. To write blog posts, you must login to the administration area and create your posts from there. You may update the name of the blog or your display name at any time from the Blog Settings.
 
 ## Installation
 
