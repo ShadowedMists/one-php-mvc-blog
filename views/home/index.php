@@ -2,6 +2,17 @@
     $settings = $this->get_settings();
     $entries = $model['entries'];
     $tags = $model['tags'];
+
+    $prevUrl = NULL;
+    $nextUrl = NULL;
+    if(isset($this->tag)) {
+        $prevUrl = $this->route_url(NULL, 'tag', array($this->tag, $this->page + 1));
+        $nextUrl = $this->route_url(NULL, 'tag', array($this->tag, $this->page - 1));
+    }
+    else {
+        $prevUrl = $this->route_url(NULL, 'home', $this->page + 1);
+        $nextUrl = $this->route_url(NULL, 'home', $this->page - 1);
+    }
 ?>
 <div class="tags">
     <p style="font-weight:bold">Tags:</p>
@@ -18,8 +29,8 @@
 <?php } ?>
 <div>
     <?php if (count($entries) == 25) { ?>
-        <a href="<?php echo $this->route_url(NULL, 'home', $this->page + 1); ?>">Older Posts</a>
+        <a href="<?php echo $prevUrl; ?>">Older Posts</a>
     <?php } if($this->page > 0) { ?>
-        <a href="<?php echo $this->route_url(NULL, 'home', $this->page - 1); ?>">Newer Posts</a>
+        <a href="<?php echo $nextUrl; ?>">Newer Posts</a>
     <?php } ?>
 </div>
