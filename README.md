@@ -11,5 +11,13 @@ While simplicity is the goal, OPMB has some of the normal blogging features you 
 
 ## Installation
 
-## Setup
+1. Install Web Server, PHP, Database
+2. Deploy Database Table Structure
+3. Deploy Application Code
+
+### Install Web Server, PHP, Database
+### Deploy Database Table Structure
+### Deploy Application Code
+
+## one-php-mvc-blog Setup
 Once the web server has been setup and the site files deployed, simply navigate to the home url of the webserver. Setup will prompt you to enter your blog name, your display name, and an email and password to authenticate with. Once completed, you are ready to start blogging.
