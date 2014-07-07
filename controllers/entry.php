@@ -22,7 +22,14 @@ class EntryController extends Controller {
         if(!empty($entry->image_url)) {
             $this->meta->image = $entry->image_url;
         }
-        $this->view($entry);
+
+        $entry_tags = entry_tag::select_by_entry($entry->id);
+        $tags = array();
+        foreach($entry_tags as $entry_tag) {
+            $tags[] = $entry_tag->name;
+        }
+
+        $this->view(array('entry' => $entry, 'tags' => $tags));
     }
 
     public function edit($id = NULL) {
@@ -39,6 +46,7 @@ class EntryController extends Controller {
             'published' => array_key_exists('published', $_POST) ? 1 : 0,
             'snippet' => $this->post('snippet'),
             'body' => $this->post('body'),
+            'tags' => $this->post('tags'),
             'error' => NULL
         );
 
@@ -73,7 +81,6 @@ class EntryController extends Controller {
                 }
             }
 
-            $entry = new entry();
             $entry->title = $model['title'];
             $entry->image_url = $model['image_url'];
             $entry->published = $model['published'];
@@ -83,6 +90,17 @@ class EntryController extends Controller {
             $res = empty($entry->id) ? $entry->insert() : $entry->update();
             $model['error'] = $res ? 'Saved successfully.' : 'Failed to save entry: ' . last_error(); 
             $model['id'] = $entry->id;
+
+            entry_tag::delete_by_entry($entry->id);
+            $tags = explode(',', $model['tags']);
+            foreach($tags as $name) {
+                $name = trim($name);
+                $tag = tag::find_or_create($name);
+                $entry_tag = new entry_tag();
+                $entry_tag->entry = $entry->id;
+                $entry_tag->tag = $tag->id;
+                $entry_tag->insert();
+            }
         }
         else {
             if(!empty($id)) {
@@ -100,6 +118,15 @@ class EntryController extends Controller {
                     $model['published'] = $entry->published;
                     $model['snippet'] = $entry->snippet;
                     $model['body'] = $entry->body;
+                }
+
+                $tags = entry_tag::select_by_entry($entry->id);
+                if($tags !== FALSE) {
+                    $t = array();
+                    foreach($tags as $name) {
+                        $t[] = $name->name;
+                    }
+                    $model['tags'] = implode(', ', $t);
                 }
             } 
         }

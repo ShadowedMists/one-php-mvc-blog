@@ -13,6 +13,8 @@
     <textarea name="snippet" required maxlength="1023" rows="5"><?php echo $model['snippet']; ?></textarea>
     <label for="body">Entry</label>
     <textarea name="body" rows="15"><?php echo $model['body']; ?></textarea>
+    <label for="tags">Tags (comma seperated)</label>
+    <input type="text" name="tags" value="<?php echo $model['tags']; ?>" />
     <?php if(!empty($model['id'])) { ?>
     <input type="button" value="Preview" onclick="preview()" />
     <?php } ?>

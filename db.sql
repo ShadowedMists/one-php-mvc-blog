@@ -23,3 +23,15 @@ create table entry (
     created datetime not null,
     updated datetime null
 )ENGINE=InnoDB;
+
+create table tag (
+    id bigint not null primary key auto_increment,
+    name varchar(255) not null
+)ENGINE=InnoDB;
+
+create table entry_tag (
+    entry bigint not null references entry(id),
+    tag bigint not null references tag(id)
+)ENGINE=InnoDB;
+
+alter table entry_tag add index (entry, tag);

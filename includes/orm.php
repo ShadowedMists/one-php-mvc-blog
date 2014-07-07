@@ -37,7 +37,6 @@ class entry {
         $sql = 'update entry set title = "%s", image_url = "%s", published = %d, snippet = "%s", body = "%s", updated = UTC_TIMESTAMP() where id = %d';
         $sql = sprintf($sql, escape($this->title), escape($this->image_url), $this->published, escape($this->snippet), escape($this->body), $this->id);
         $res = mysqli_query(Application::$DB_CONNECTION, $sql);
-        $this->id = mysqli_insert_id(Application::$DB_CONNECTION);
         return $res;
     }
 
@@ -164,7 +163,6 @@ class setting {
         $sql = 'update setting set blog_name = "%s", email = "%s", display_name = "%s", password_hash = "%s", password_salt = "%s" where id = %d';
         $sql = sprintf($sql, escape($this->blog_name), escape($this->email), escape($this->display_name), escape($this->password_hash), escape($this->password_salt), $this->id);
         $res = mysqli_query(Application::$DB_CONNECTION, $sql);
-        $this->id = mysqli_insert_id(Application::$DB_CONNECTION);
         return $res;
     }
 
@@ -183,6 +181,97 @@ class setting {
         $setting = new setting();
         $setting->load(mysqli_fetch_array($res));
         return $setting;
+    }
+}
+
+class tag {
+    public $id;
+    public $name;
+
+    public function load($row) {
+        $this->id = intval($row['id']);
+        $this->name = $row['name'];
+    }
+
+    public static function find_or_create($name) {
+        $sql = 'select id, name from tag where name = "%s"';
+        $sql = sprintf($sql, escape($name));
+        $res = mysqli_query(Application::$DB_CONNECTION, $sql);
+        if($res === FALSE) {
+            return FALSE;
+        }
+        
+        $tag = new tag();
+        if(mysqli_num_rows($res) === 0) {
+            $sql = 'insert into tag (name) values ("%s");';
+            $sql = sprintf($sql, escape($name));
+            $res = mysqli_query(Application::$DB_CONNECTION, $sql);
+            if($res === FALSE) {
+                return FALSE;
+            }
+            $tag->id = mysqli_insert_id(Application::$DB_CONNECTION);
+            $tag->name = $name;
+        }
+        else {
+            $tag->load(mysqli_fetch_array($res));
+        }
+        return $tag;
+    }
+}
+
+class entry_tag {
+    public $entry;
+    public $tag;
+    public $name;
+
+    public function load($row) {
+        $this->entry = intval($row['entry']);
+        $this->tag = intval($row['tag']);
+        $this->name = array_key_exists('name', $row) ? $row['name'] : NULL;
+    }
+
+    public function insert() {
+        $sql = 'insert into entry_tag (entry, tag) values (%d, %d)';
+        $sql = sprintf($sql, $this->entry, $this->tag);
+        $res = mysqli_query(Application::$DB_CONNECTION, $sql);
+        $this->id = mysqli_insert_id(Application::$DB_CONNECTION);
+        return $res;
+    }
+
+    public static function select_by_entry($entry) {
+        $sql = 'select entry, tag, name from entry_tag et inner join tag t on et.tag = t.id where entry = "%s"';
+        $sql = sprintf($sql, $entry);
+        $res = mysqli_query(Application::$DB_CONNECTION, $sql);
+        if($res === FALSE || mysqli_num_rows($res) === 0) { 
+            return array();
+        }
+        $array = array();
+        while($row = mysqli_fetch_array($res)) {
+            $entry = new entry_tag();
+            $entry->load($row);
+            $array[] = $entry;
+        }
+        return $array;
+    }
+    
+    public static function delete_by_entry($entry) {
+        $sql = 'delete from entry_tag where entry = %d';
+        $sql = sprintf($sql, $entry);
+        return mysqli_query(Application::$DB_CONNECTION, $sql);
+    }
+}
+
+class tags_in_use {
+    public static function select_all() {
+        $res = mysqli_query(Application::$DB_CONNECTION, 'select name from tag t inner join (select tag, count(*) as das_count from entry_tag group by tag) c on t.id = c.tag and das_count > 0 order by das_count desc, name asc');
+        if($res === FALSE) {
+            return FALSE;
+        }
+        $array = array();
+        while($row = mysqli_fetch_array($res)) {
+            $array[] = $row['name'];
+        }
+        return $array;
     }
 }
 
