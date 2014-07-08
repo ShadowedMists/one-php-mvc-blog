@@ -1,7 +1,4 @@
-<?php 
-    $settings = $this->get_settings(); 
-    $session =  $this->get_session();
-?>
+<?php $settings = $this->get_settings(); ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->request->lang; ?>">
     <head>
@@ -34,9 +31,7 @@
         </div>
         
         <footer>
-            powered by <a href="https://github.com/ShadowedMists/one-php-mvc-blog" target="_blank">one-php-mvc-blog</a>
-            | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">admin</a>
-            <?php if ($session !== NULL ) { ?>| <a href="<?php echo $this->route_url('logoff', 'admin'); ?>">logoff</a><?php }?>
+            powered by <a href="https://github.com/ShadowedMists/one-php-mvc-blog" target="_blank">one-php-mvc-blog</a> | <a href="<?php echo $this->route_url(NULL, 'admin'); ?>">admin</a>
         </footer>
     </body>
 </html>

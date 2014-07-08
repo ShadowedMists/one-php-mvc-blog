@@ -531,11 +531,11 @@ class Controller {
      */
     public function set_session($session = NULL) {
         if($session === NULL) {
-            setcookie('opmb_session', '', time() - 86400, '/');
+            setcookie('opmb_session', '', time()-86400, '/');
             return;
         }
         $hash = md5(strtolower($session->code . $session->id . $session->created));
-        setcookie('opmb_session', $session->code . '.' . $hash, time() + 86400, '/');
+        setcookie('opmb_session', $session->code . '.' . $hash, time() + 30*86400, '/');
     }
 
     /**

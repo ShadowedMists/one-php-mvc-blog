@@ -64,10 +64,17 @@ footer {
     padding: 15px 0px;
     font-size: .8em;
 }
-.title {
-    margin: 10px 0px 0px 0px;
+.entry {
+    float: left;
+    clear: none;
+    display: inline-block;
+    width: 89%
 }
-.info {
+.entry > h2 {
+    margin: 10px 0px 0px 0px;
+    padding: 0px;
+}
+.entry > p:not(.snippet) {
     margin: 0px;
     padding: 0px;
 }
@@ -89,23 +96,9 @@ footer {
     border-left: 2px solid #39d;
     padding-left: 5px;
 }
-
-@media all and (max-width:499px) {
-    .tags {
-        display:none;
-    }
-}
-@media all and (min-width:500px) {
-    .tags {
-        float: right;
-        clear:none;
-        width: 15%;
-        display: inline-block;
-    }
-    .entry {
-        float: left;
-        clear: none;
-        display: inline-block;
-        width: 84%
-    }
+.tags {
+    float: right;
+    clear:none;
+    width: 10%;
+    display: inline-block;
 }
