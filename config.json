@@ -15,7 +15,7 @@
   },
   "default_language" : "en",
   "languages": ["en"],
-  "includes": ["includes/orm.php", "includes/Parsedown.php"],
+  "includes": ["includes/orm.php"],
   "master_layout" : "views/_layout.php",
   "debug": false
 }
