@@ -161,6 +161,11 @@ class AdminController extends Controller {
         $entries = entry::select_list();
         $this->view($entries);
     }
+    
+    public function logoff() {
+        $this->set_session(NULL);
+        $this->redirect(NULL, "home");
+    }
 }
 
 ?>
