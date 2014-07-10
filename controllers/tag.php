@@ -8,6 +8,9 @@ class TagController extends Controller {
         if($tag === NULL) {
             $this->redirect(NULL, 'home');
         }
+        
+        $settings = $this->get_settings();
+        $this->meta->title = 'Entries Tagged ' . $tag . ' - ' .$settings->blog_name;
 
         $page = intval($page);
         if($page < 0) {
