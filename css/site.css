@@ -39,7 +39,7 @@ nav a:hover {
     text-decoration: underline;
 }
 form {
-    max-width: 500px;
+    max-width: 600px;
     margin: 0px auto;
 }
 form input[type=text], 
@@ -71,6 +71,12 @@ footer {
 .info {
     margin: 0px;
     padding: 0px;
+}
+.manage th.left {
+    text-align: left;
+}
+.manage td.center {
+    text-align: center;
 }
 
 /* Markdown Styles*/

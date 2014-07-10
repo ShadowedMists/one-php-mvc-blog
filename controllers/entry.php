@@ -17,8 +17,9 @@ class EntryController extends Controller {
             $this->gone();
         }
         
-        $this->meta->title = $entry->title . ' - ' . $settings->blog_name;
-        $this->meta->description = $entry->snippet;
+        $this->meta->title = htmlentities($entry->title . ' - ' . $settings->blog_name);
+        $this->meta->author = htmlentities($settings->display_name);
+        $this->meta->description = htmlentities($entry->snippet);
         if(!empty($entry->image_url)) {
             $this->meta->image = $entry->image_url;
         }
@@ -28,6 +29,7 @@ class EntryController extends Controller {
         foreach($entry_tags as $entry_tag) {
             $tags[] = $entry_tag->name;
         }
+        $this->meta->keywords = htmlentities(implode(',', $tags));
 
         $this->view(array('entry' => $entry, 'tags' => $tags));
     }
@@ -142,25 +144,28 @@ class EntryController extends Controller {
         if(empty($id)) {
             $this->not_found();
         }
+        $settings = $this->get_settings();
         
         $entry = entry::select_by_id($id);
         if($entry === NULL) {
             $this->not_found();
         }
 
-        $model = array('entry' => $entry, 'tags' => NULL);
-
-        $tags = entry_tag::select_by_entry($entry->id);
-        if($tags !== FALSE) {
-            $t = array();
-            foreach($tags as $name) {
-                $t[] = $name->name;
-            }
-            $model['tags'] = $t;
+        $this->meta->title = htmlentities($entry->title . ' - ' . $settings->blog_name);
+        $this->meta->author = htmlentities($settings->display_name);
+        $this->meta->description = htmlentities($entry->snippet);
+        if(!empty($entry->image_url)) {
+            $this->meta->image = $entry->image_url;
         }
 
-        $this->meta->title = $entry->title . ' - Preview';
-        $this->view($model, 'index');
+        $entry_tags = entry_tag::select_by_entry($entry->id);
+        $tags = array();
+        foreach($entry_tags as $entry_tag) {
+            $tags[] = $entry_tag->name;
+        }
+        $this->meta->keywords = htmlentities(implode(',', $tags));
+
+        $this->view(array('entry' => $entry, 'tags' => $tags), 'index');
     }
 
     public function delete($id) {
