@@ -3,6 +3,8 @@ one-php-mvc-blog
 
 A single user blog built on one-php-mvc framework and designed to run on the Raspberry PI.
 
+You can view the screenshots of the default blog on the [imgur album](http://imgur.com/a/PIwdW).
+
 ## Philosophy
 Built on the one-php-mvc (OPM) framework, one-php-mvc-blog (OPMB) strives to maintain the low footprint, resource-mindful approach that the framework embodies. Designed for the Rasberry Pi, OPMB is a mobile-responsive, dynamic, database-driven blog platform unlike other blogging platforms that force you to generate static html files or perform additional steps to render content.  
 
