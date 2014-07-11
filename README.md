@@ -73,4 +73,5 @@ Update database connection information and default application meta-data:
 
 
 ## one-php-mvc-blog Setup
-Once the web server has been setup and the site files deployed, simply navigate to the home url of the webserver. Setup will prompt you to enter your blog name, your display name, and an email and password to authenticate with. Once completed, you are ready to start blogging.
+Once the web server has been setup and the site files deployed, simply navigate to the home url of the webserver. A one time Setup page will prompt you to enter your blog name, your display name, and an email and password to authenticate with. Once completed, you are ready to start blogging.  
+![one-php-mvc-blog Setup](http://i.imgur.com/Cs3VjKr.png)
