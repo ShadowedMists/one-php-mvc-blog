@@ -29,7 +29,7 @@ Configure php5-fpm:
 
 Configure nginx:
 
-    nano /etc/nginx/sites-available/default
+    sudo nano /etc/nginx/sites-available/default
 
     # php is good
     index index.php;
@@ -53,12 +53,12 @@ Configure nginx:
     cd ~
     wget https://github.com/ShadowedMists/one-php-mvc-blog/archive/master.zip
     unzip master.zip
-    cp -rf one-php-mvc-blog-master/* /usr/share/nginx/www
-    chmod 755 -R /usr/share/nginx/www
+    sudo cp -rf one-php-mvc-blog-master/* /usr/share/nginx/www
+    sudo chmod 755 -R /usr/share/nginx/www
 
 Update database connection information and default application meta-data:
 
-    nano /usr/share/nginx/www/config.json
+    sudo nano /usr/share/nginx/www/config.json
 
 ### Deploy Database Table Structure
 
