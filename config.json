@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "one-php-mvc Blog",
+    "title": "one-php-mvc-blog",
     "author": "Shadowed Mists",
     "description": "This is the best blog ever. You must read it.",
     "keywords": "keywords, meta, abstract, one word descriptions are best",
@@ -11,7 +11,7 @@
     "host": "localhost", 
     "database": "blog",
     "username": "root",
-    "password": "kaze5293"
+    "password": "password"
   },
   "default_language" : "en",
   "languages": ["en"],
