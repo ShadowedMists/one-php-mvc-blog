@@ -116,7 +116,7 @@ class EntryController extends Controller {
                 else {
                     $model['id'] = $entry->id;
                     $model['title'] = $entry->title;
-                    $model['inage_url'] = $entry->image_url;
+                    $model['image_url'] = $entry->image_url;
                     $model['published'] = $entry->published;
                     $model['snippet'] = $entry->snippet;
                     $model['body'] = $entry->body;
